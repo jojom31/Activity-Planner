@@ -2,8 +2,7 @@ import { useState } from 'react'
 
 const AddActivity = ({ onAdd }) => {
     const [title, setTitle] = useState('')
-    const [day, setDay] = useState('')
-    const [reminder, setReminder] = useState('false')
+    const [date, setDate] = useState('')
     const [complete, setComplete] = useState('false')
 
     const onSubmit = (e) => {
@@ -14,11 +13,10 @@ const AddActivity = ({ onAdd }) => {
             return
         }
 
-        onAdd({ title, day, reminder, complete })
+        onAdd({ title, date, complete })
 
         setTitle('')
-        setDay('')
-        setReminder(false)
+        setDate('')
         setComplete(false)
     }
 
@@ -30,18 +28,15 @@ const AddActivity = ({ onAdd }) => {
                 <input type='text' placeholder='Enter Activity' value={title} onChange={(e) => setTitle(e.target.value) } />
             </div>
             <div className='form-control'>
-                <label>Day & Time</label>
-                <input type='text' placeholder='Enter Day & Time' value={day} onChange={(e) => setDay(e.target.value)} />
+                <label>Date & Time</label>
+                <input type='text' placeholder='Enter Date & Time' value={date} onChange={(e) => setDate(e.target.value)} />
             </div>
-            <div className='form-control form-control-check' >
-                <label>Set Reminder</label>
-                <input type='checkbox' checked={reminder} value={reminder} onChange={(e) => setReminder(e.currentTarget.checked)} />
-            </div>
+    
             <div className='form-control form-control-check'>
                 <label>Complete</label>
-                <input type='checkbox' checked={complete} value={complete} onChange={(e) => setComplete(e.currentTarget.unchecked)} />
+                <input type='checkbox' checked={complete} value={complete} onChange={(e) => setComplete(e.currentTarget.checked)} />
             </div>
-            <input type='submit' value= 'Save Activity' className='btn btn-block'/>
+            <input type='submit' value="Save" className='btn btn-block'/>
         </form>
     )
 }
