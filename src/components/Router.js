@@ -4,6 +4,9 @@
 //import LoginForm from "./LoginForm";
 //import SignUp from "./SignUp";
 
+import LoginForm from "./LoginForm";
+import SignUp from "./SignUp";
+
 
 
 const App = () => {
@@ -18,7 +21,7 @@ const App = () => {
                     </ul>
                 </nav>
                 <Switch>
-                <Route path="/" exact component={Activities} />
+                <Route path="/" exact component={Home} />
                 <Route path="/profile" component={SignUp} />
                 <Route path="/edit profile" component={LoginForm} />
                 </Switch>
@@ -30,13 +33,15 @@ const App = () => {
 
 const Home = () => (
     <Fragment>
-        <h1>Home</h1>
+        <h1>`</h1>
+        <LoginForm />
     </Fragment>
 );
 
 const Profile = () => (
     <Fragment>
         <h1>Profile</h1>
+        <SignUp />
     </Fragment>
 );
 

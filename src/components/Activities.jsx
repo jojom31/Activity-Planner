@@ -1,5 +1,6 @@
 import Activity from './Activity'
 
+
 const Activities = ({ activities, onDelete, onToggle }) => {
     
     return (

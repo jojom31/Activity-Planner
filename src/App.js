@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Activities from './components/Activities'
 import AddActivity from './components/AddActivity'
@@ -7,43 +7,50 @@ import './App.css';
 
 const App = () => { 
   const [showAddActivity, setShowAddActivity] = useState(false)
-  const [activities , setActivities] = useState([
-  {
-      id: 1,
-      title: 'Go to the store',
-      date: 'March 14,2021 12:30pm',
-      complete: true,
+  const [activities , setActivities] = useState([])
 
-  },
-  {
-      id: 2,
-      title: "Finish React Project",
-      date: 'March 24,2021 2:00pm',
-      reminder: true,
-      complete: false,
-  },
-  {
-      id: 3,
-      title: "Hair appointment",
-      date: 'April 14, 2021 2:00pm',
-      reminder: true,
-      complete: false,
-  },
-])
+  useEffect(() => {
+    const getActivities = async () => {
+      const activitiesServer = await fetchActivities()
+      setActivities(activitiesServer)
 
-const addActivity = (activity) => {
-  const id = Math.floor(Math.random() * 1000) + 1
-  const newActivity = { id, ...activity}
-  setActivities([...activities, newActivity])
+    }
+    
+    
+    getActivities()
+  }, [])
+
+  const fetchActivities = async () => {
+    const res = await fetch('http://localhost:3003/activities')
+    const data = await res.json()
+
+    return data
+  }
+
+const addActivity = async (activity)  => {
+  const res = await fetch('http://localhost:3003/activities', {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify(activity)
+  })
+  const data = await res.json()
+
+  setActivities([...activities, data])
 }
 
-const deleteActivity = (id) => {
+const deleteActivity = async (id) => {
+  await fetch(`http://localhost:3003/activities/${id}`, {
+
+    method: `DELETE`
+  })
   setActivities(activities.filter((activity => activity.id !== id) ))
 }
 
 
 
-const clickComplete = (id) => {
+const clickComplete = async (id) => {
   setActivities(activities.map((activity) => activity.id === id ? {...activity, complete: !activity.complete} : activity))
 }
 
